@@ -1,0 +1,9 @@
+{
+  "name": "ripple-autopilot",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "start \"backend\" cmd /c \"cd backend && npm run dev\" && start \"frontend\" cmd /c \"cd frontend && npm run dev\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev"
+  }
+}
