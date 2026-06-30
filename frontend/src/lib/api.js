@@ -1,3 +1,5 @@
+const BASE = import.meta.env.VITE_API_URL ?? '';
+
 // SSE parser: yields { event, data } from a fetch response with text/event-stream
 async function* parseSSE(response) {
   const reader = response.body.getReader();
@@ -29,7 +31,7 @@ async function* parseSSE(response) {
 }
 
 export async function generateContent(prompt, onEvent) {
-  const response = await fetch('/api/generate/text', {
+  const response = await fetch(`${BASE}/api/generate/text`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt }),
@@ -47,7 +49,7 @@ export async function generateContent(prompt, onEvent) {
 }
 
 export async function regenerateImage(prompt, aspect = 'square') {
-  const res = await fetch('/api/generate/image', {
+  const res = await fetch(`${BASE}/api/generate/image`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt, aspect }),
@@ -57,7 +59,7 @@ export async function regenerateImage(prompt, aspect = 'square') {
 }
 
 export async function generateAIVideo(prompt) {
-  const res = await fetch('/api/generate/video', {
+  const res = await fetch(`${BASE}/api/generate/video`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ prompt }),
@@ -68,7 +70,7 @@ export async function generateAIVideo(prompt) {
 }
 
 export async function schedulePost(payload) {
-  const res = await fetch('/api/schedule', {
+  const res = await fetch(`${BASE}/api/schedule`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -78,11 +80,11 @@ export async function schedulePost(payload) {
 }
 
 export async function getScheduledPosts() {
-  const res = await fetch('/api/schedule');
+  const res = await fetch(`${BASE}/api/schedule`);
   if (!res.ok) throw new Error('Failed to load posts');
   return res.json();
 }
 
 export async function deleteScheduledPost(id) {
-  await fetch(`/api/schedule/${id}`, { method: 'DELETE' });
+  await fetch(`${BASE}/api/schedule/${id}`, { method: 'DELETE' });
 }

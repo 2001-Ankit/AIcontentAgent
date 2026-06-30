@@ -3,6 +3,7 @@ import { hasCredits, deductCredits } from '../lib/credits.js';
 import { refreshCredits } from '../components/CreditsDisplay.jsx';
 import { PLATFORMS as PLATFORM_LIST } from '../lib/platforms.js';
 
+const BASE = import.meta.env.VITE_API_URL ?? '';
 const GRADIENT = 'linear-gradient(120deg,#FF3D81 0%,#A855F7 55%,#6366F1 100%)';
 
 const TONES = [
@@ -282,7 +283,7 @@ export default function CaptionLabStep() {
     setResult(null);
 
     try {
-      const response = await fetch('/api/captions/generate', {
+      const response = await fetch(`${BASE}/api/captions/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
